@@ -58,7 +58,8 @@ try
 		<title>RHoK - Spatial Truth</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/bootstrap.css" />
+		<link rel="stylesheet" href="css/font-awesome.css" />
 		<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
 		<script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
 		<script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
@@ -66,7 +67,7 @@ try
 		<script src="js/OpenLayers.Control.LoadingPanel.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<style type="text/css">
-			.main { padding-top: 40px; }
+			#viewer { padding-top: 43px; }
 			#theNavbar { margin-bottom: 0px !important; }
             .olControlLayerSwitcher .olButton { color: white !important; }
             .olControlLayerSwitcher label.olButton { display: inline !important; }
@@ -106,6 +107,7 @@ try
 			?>
 	        };
 
+	        var sessionId = '<?= $sessionId ?>';
 			var map = null;
 			var myPositionLayer = null;
 			var vicMapLayer = null;
@@ -118,6 +120,29 @@ try
 				$("#viewer").height($(window).height() - $("#theNavbar").height());
         		if (map != null)
         			map.updateSize();
+			}
+
+			function mgKeepAlive() {
+				$.ajax({
+					url: mapAgentUrl + "?OPERATION=GETSITEVERSION&VERSION=1.0.0&SESSION=" + sessionId,
+					method: 'get',
+					success: function(data, status, xhr) {
+						console.log("Kept alive");
+						setTimeout(mgKeepAlive, 20000);
+					},
+					failure: function(jqXHR, textStatus, errorThrown) {
+						console.error("Session expired");
+						window.location.refresh();
+					}
+				});
+			}
+
+			function showBaseLayerToggler() {
+				alert("Base Layers - TODO");
+			}
+
+			function showGeoRssToggler() {
+				alert("Data Feeds - TODO");
 			}
 
 			function setVicMapLayerVisibility(layerName, bVisible) {
@@ -213,6 +238,7 @@ try
 				}, function(err) {
 					map.zoomToMaxExtent();
 				}); 
+				mgKeepAlive();
 			});
 
 			function setMyPosition(lon, lat) {
@@ -253,43 +279,10 @@ try
               <a class="brand" href="#">RHoK</a>
               <div class="nav-collapse">
                 <ul class="nav">
-                  <!--
-                  <li><a href="javascript:viewer.invokeCommand('Layers')"><i class="icon-align-justify icon-white"></i> Layers</a></li>
-                  -->
                   <li><a href="javascript:myLocation()"><i class="icon-screenshot icon-white"></i> My Location</a></li>
+                  <li><a href="javascript:showBaseLayerToggler()"><i class="icon-align-justify icon-white"></i> Layers</a></li>
+                  <li><a href="javascript:showGeoRssToggler()"><i class="icon-screenshot icon-white"></i> Data Feeds</a></li>
                 </ul>
-                <!--
-                <ul class="nav pull-right">
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="javascript:viewer.invokeCommand('Buffer')">Buffer</a></li>
-                      <li><a href="javascript:viewer.invokeCommand('Measure')">Measure</a></li>
-                      <li><a href="javascript:viewer.invokeCommand('Redline')">Redline</a></li>
-                      <li class="divider"></li>
-                      <li class="nav-header">Draw</li>
-                      <li><a href="javascript:viewer.invokeCommand('DrawFeature', 'POINT')">Point</a></li>
-                      <li><a href="javascript:viewer.invokeCommand('DrawFeature', 'LINE')">Line</a></li>
-                      <li><a href="javascript:viewer.invokeCommand('DrawFeature', 'POLYGON')">Polygon</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                -->
-                <!--
-                <form class="navbar-search pull-right" action="">
-                  <input type="text" class="search-query span2" placeholder="Search">
-                </form>
-                <ul class="nav pull-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Utility <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Item 1</a></li>
-                            <li><a href="#">Item 2</a></li>
-                            <li><a href="#">Item 3</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                -->
               </div><!-- /.nav-collapse -->
             </div><!-- /.container -->
           </div><!-- /navbar-inner -->

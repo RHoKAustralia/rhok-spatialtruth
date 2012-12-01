@@ -79,7 +79,7 @@ OpenLayers.Layer.MapGuide = OpenLayers.Class(OpenLayers.Layer.Grid, {
      */
     SINGLE_TILE_PARAMS: {
         operation: 'GETMAPIMAGE',
-        format: 'PNG',
+        format: 'PNG8',
         locale: 'en',
         clip: '1',
         version: '1.0.0'

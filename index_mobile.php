@@ -452,7 +452,7 @@ try
                             map.setBaseLayer(layer);
                     }
                 });
-                if (showVicMapLayers.length > 0 && hideVicMapLayers.length > 0) {
+                if (showVicMapLayers.length > 0 || hideVicMapLayers.length > 0) {
                     var params = {
                         ts : (new Date()).getTime(),  //add a timestamp to prevent caching on the server
                         showLayers : showVicMapLayers.length > 0 ? showVicMapLayers.join(",") : null,
@@ -561,7 +561,7 @@ try
               <div class="nav-collapse">
                 <ul class="nav">
                   <li><a href="javascript:myLocation()"><i class="icon-screenshot"></i> My Location</a></li>
-                  <li><a href="javascript:initialView()"><i class="icon-screenshot"></i> Initial View</a></li>
+                  <li><a href="javascript:initialView()"><i class="icon-check-empty"></i> Initial View</a></li>
                   <li><a href="#baseLayerModal" data-toggle="modal" onclick="populateBaseLayers()"><i class="icon-align-justify"></i> Layers</a></li>
                   <li><a href="#dataFeedsModal" data-toggle="modal" onclick="populateDataFeeds()"><i class="icon-rss"></i> Data Feeds</a></li>
                 </ul>

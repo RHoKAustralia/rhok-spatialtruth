@@ -29,5 +29,5 @@ Load this package using the MapGuide Site Administrator (http://localhost:8008/m
 
 Launch the following URLs:
 
- * Map Comparison demo: http://localhost:8008/mapguide/<your git clone name>/mapComparing.html
- * Main demo: http://localhost:8008/mapguide/<your git clone name>/index_mobile.php
+ * Map Comparison demo: http://localhost:8008/mapguide/[your git clone name]/mapComparing.html
+ * Main demo: http://localhost:8008/mapguide/[your git clone name]/index_mobile.php
